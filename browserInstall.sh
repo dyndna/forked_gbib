@@ -25,8 +25,7 @@ MYSQLDIR=/var/lib/mysql
 MYSQLADMIN=mysqladmin
 
 # mysql user account, different on OSX
-#MYSQLUSER=mysql
-MYSQLUSER=root #unsafe
+MYSQLUSER=mysql
 
 # mysql client command, will be adapted on OSX
 MYSQL=mysql
@@ -547,10 +546,10 @@ function installDebian ()
         moveAwayMyCnf
 
         # do not prompt in apt-get, will set an empty mysql root password
-        export DEBIAN_FRONTEND=noninteractive
-        apt-get --assume-yes install mysql-server
+        #export DEBIAN_FRONTEND=noninteractive
+        #apt-get --assume-yes install mysql-server
         # flag so script will set mysql root password later to a random value
-        SET_MYSQL_ROOT=1
+        SET_MYSQL_ROOT=0
     fi
 
 }
@@ -661,10 +660,10 @@ function mysqlChangeRootPwd ()
 
    # generate a random char string
    # OSX's tr is quite picky with unicode, so change LC_ALL temporarily
-   MYSQLROOTPWD=`cat /dev/urandom | LC_ALL=C tr -dc A-Z-a-z-0-9 | head -c8` || true
+   # MYSQLROOTPWD=`cat /dev/urandom | LC_ALL=C tr -dc A-Z-a-z-0-9 | head -c8` || true
    # paranoia check
    if [[ "$MYSQLROOTPWD" == "" ]]; then
-       echo2 Error: could not generate a random Mysql root password
+       echo2 Error: could not Mysql root password in env variable, MYSQLROOTPWD
        exit 111
    fi
 
