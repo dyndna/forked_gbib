@@ -12,6 +12,7 @@ set -u -e -o pipefail # fail on unset vars and all errors, also in pipes
 
 # directory where CGI-BIN and htdocs are downloaded to
 APACHEDIR=/usr/local/apache
+APACHEUSER=root # unsafe
 
 # apache config file
 APACHECONFURL=https://raw.githubusercontent.com/maximilianh/browserInstall/master/apache.conf
@@ -25,7 +26,8 @@ MYSQLDIR=/var/lib/mysql
 MYSQLADMIN=mysqladmin
 
 # mysql user account, different on OSX
-MYSQLUSER=mysql
+#MYSQLUSER=mysql
+MYSQLUSER=root #unsafe
 
 # mysql client command, will be adapted on OSX
 MYSQL=mysql
@@ -138,8 +140,9 @@ function goOffline ()
 function waitKey ()
 {
     echo2
-    echo2 Press any key to continue or CTRL-C to abort.
-    read -n 1 -s
+    echo2 Waiting 10 seconds to continue or CTRL-C to abort.
+    #read -n 1 -s
+    sleep 10
     echo2
 }
 
